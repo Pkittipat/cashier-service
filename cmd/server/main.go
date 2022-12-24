@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -27,6 +28,14 @@ func Run() error {
 	}); err != nil {
 		panic(err)
 	}
+
+	fmt.Println("HERE: ", configInstance.App.APP.DebugMode)
+	// if configInstance.App.APP.DebugMode {
+	// 	fmt.Println("INNN")
+	// 	gin.SetMode(gin.DebugMode)
+	// } else {
+	// 	gin.SetMode(gin.ReleaseMode)
+	// }
 
 	app := gin.New()
 	setupMiddlewares(app, container)
