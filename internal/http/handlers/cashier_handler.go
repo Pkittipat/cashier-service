@@ -47,7 +47,6 @@ func (h *cashierHandler) Purchase(c *gin.Context) {
 func CalculateChange(price float64, payment float64, root *inventory.Node) *responses.Purchase {
 	change := payment - price
 	node := root
-	// breakdown := make([]*responses.Breakdown, 0)
 	breakdownMap := make(map[float64]*responses.Breakdown)
 	for change > 0 && node != nil {
 		if change >= node.Value && node.Amount > 0 {
@@ -62,10 +61,6 @@ func CalculateChange(price float64, payment float64, root *inventory.Node) *resp
 
 			}
 			breakdownMap[node.Value].Amount += 1
-			// breakdown = append(breakdown, &responses.Breakdown{
-			// 	Value:  node.Value,
-			// 	Amount: amount,
-			// })
 		} else {
 			node = node.Left
 		}
