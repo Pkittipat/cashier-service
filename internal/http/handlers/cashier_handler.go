@@ -27,7 +27,8 @@ func NewCashierHandler(
 }
 
 func (h *cashierHandler) GetInventory(c *gin.Context) {
-	c.JSON(http.StatusOK, responses.NewInvetory(h.inventoryNode.GetInventory()))
+	data := responses.NewInvetory(h.inventoryNode.GetInventory())
+	responses.NewResponse(data).Response(c, http.StatusOK)
 	return
 }
 
@@ -38,7 +39,7 @@ func (h *cashierHandler) Purchase(c *gin.Context) {
 		return
 	}
 	result := CalculateChange(request.Price, request.Payment, h.inventoryNode.Root)
-	c.JSON(http.StatusOK, result)
+	responses.NewResponse(result).Response(c, http.StatusOK)
 	return
 }
 
@@ -46,21 +47,36 @@ func (h *cashierHandler) Purchase(c *gin.Context) {
 func CalculateChange(price float64, payment float64, root *inventory.Node) *responses.Purchase {
 	change := payment - price
 	node := root
-	breakdown := make([]*responses.Breakdown, 0)
+	// breakdown := make([]*responses.Breakdown, 0)
+	breakdownMap := make(map[float64]*responses.Breakdown)
 	for change > 0 && node != nil {
 		if change >= node.Value && node.Amount > 0 {
 			change -= node.Value
 			node.Amount -= 1
-			breakdown = append(breakdown, &responses.Breakdown{
-				Value:  node.Value,
-				Amount: 1,
-			})
+			_, ok := breakdownMap[node.Value]
+			if !ok {
+				breakdownMap[node.Value] = &responses.Breakdown{
+					Value:  node.Value,
+					Amount: 0,
+				}
+
+			}
+			breakdownMap[node.Value].Amount += 1
+			// breakdown = append(breakdown, &responses.Breakdown{
+			// 	Value:  node.Value,
+			// 	Amount: amount,
+			// })
 		} else {
 			node = node.Left
 		}
 	}
+
+	breakdown := make([]*responses.Breakdown, 0)
+	for _, val := range breakdownMap {
+		breakdown = append(breakdown, val)
+	}
 	return &responses.Purchase{
-		Change:    change,
+		Change:    (payment - price),
 		Breakdown: breakdown,
 	}
 }

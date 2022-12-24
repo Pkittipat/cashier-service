@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/Pkittipat/cashier-service/internal/http/responses"
 	"github.com/Pkittipat/cashier-service/pkg/inventory"
 	"github.com/gin-gonic/gin"
 )
@@ -41,5 +42,8 @@ func (h *inventoryHandler) UpdateInventory(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"value": value, "amount": amount})
+	// c.JSON(http.StatusOK, gin.H{"value": value, "amount": amount})
+	data := gin.H{"value": value, "amount": amount}
+	responses.NewResponse(data).Response(c, http.StatusOK)
+	return
 }
