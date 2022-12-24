@@ -1,0 +1,113 @@
+{
+	"info": {
+		"_postman_id": "0a776097-2f8b-49b0-998d-0cd68ccb6ffb",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13337686"
+	},
+	"item": [
+		{
+			"name": "Purchase",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 255.50,\n    \"payment\": 500\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/cashier/purchase",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cashier",
+						"purchase"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list Inventory",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/cashier/inventory",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"cashier",
+						"inventory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Update Inventory",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"value\": 100,\n    \"amount\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/admin/inventory/:value/:amount",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"admin",
+						"inventory",
+						":value",
+						":amount"
+					],
+					"query": [
+						{
+							"key": "value",
+							"value": "100",
+							"disabled": true
+						},
+						{
+							"key": "amount",
+							"value": "",
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "value",
+							"value": "100"
+						},
+						{
+							"key": "amount",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
