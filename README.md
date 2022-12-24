@@ -52,3 +52,21 @@ POST /cashier/purchase
   ]
 }
 ```
+## Features
+- Accept payment method `cash`.
+- Displaying the current inventory of bank notes and coins on the screen for customers to see.
+- (idea) Accepting different forms of payment, such as credit cards, debit cards, and mobile payments.
+- (idea) Providing options for customers to donate their change to a charity or save it for later use.
+## Functions
+- A function to calculate the change money when customer pays with the cash value larger than the product price.
+- A function to update the inventory of bank notes and coins when a purchase is made or when new bank notes and coins are added to the system.
+- (idea) A function to process and validate different forms of payment, such as checking the validity of a credit card or verifying a mobile payment.
+- (idea) A function to handle donations or saving of change for later use, if these options are available. This could involve updating a database or other storage system to track the donated or saved change.
+
+## System Flow
+- The customer selects the products and proceeds to checkout.
+- The system calculates the total price of the products and displays it to the customer.
+- The customer selects the payment method and enters the payment information (cash).
+- The system processes the payment and updates the inventory accordingly.
+- If the payment is successful, the system prints the receipt and gives the change to the customer, if applicable.
+- If the payment is unsuccessful, the system displays an error message and asks the customer to try again.
