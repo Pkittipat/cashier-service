@@ -1,10 +1,11 @@
 package config
 
 import (
-	"log"
-	"time"
+	"os"
 
-	"github.com/jinzhu/configor"
+	"github.com/Netflix/go-env"
+	"github.com/joho/godotenv"
+	"go.uber.org/zap"
 )
 
 // Config represents application configuration which can also be set
@@ -24,23 +25,42 @@ type Config struct {
 // LoadConfig loads the configuration from `.env` file in the same
 // directory as the application and populate the Config accordingly.
 func LoadConfig() (*Config, error) {
-	var config Config
-
-	err := loadEnv()
-	if err == nil {
-		log.Println("Env file loaded")
-	}
-
-	err = configor.
-		New(&configor.Config{AutoReload: true, AutoReloadInterval: time.Minute}).
-		Load(&config)
-
+	configLogger, err := zap.NewProduction()
 	if err != nil {
-		log.Println(err)
-		log.Fatal("Error loading config")
+		return nil, err
 	}
 
-	return &config, err
+	envFile := os.Getenv("ENV_FILE")
+	if envFile == "" {
+		envFile = ".env"
+	}
+
+	if err := godotenv.Load(envFile); err != nil {
+		configLogger.Info("Error loading dot env file", zap.String("path", envFile))
+	}
+	// var config Config
+
+	// err := loadEnv()
+	// if err == nil {
+	// 	log.Println("Env file loaded")
+	// }
+
+	// err = configor.
+	// 	New(&configor.Config{AutoReload: true, AutoReloadInterval: time.Minute}).
+	// 	Load(&config)
+
+	// if err != nil {
+	// 	log.Println(err)
+	// 	log.Fatal("Error loading config")
+	// }
+
+	var cfg Config
+	_, err = env.UnmarshalFromEnviron(&cfg)
+	if err != nil {
+		return nil, err
+	}
+
+	return &cfg, err
 }
 
 // LoadTestConfig ...

@@ -29,6 +29,12 @@ func Run() error {
 		panic(err)
 	}
 
+	if configInstance.App.APP.DebugMode {
+		gin.SetMode(gin.DebugMode)
+	} else {
+		gin.SetMode(gin.ReleaseMode)
+	}
+
 	app := gin.New()
 	setupMiddlewares(app, container)
 	setupRoutes(app, container)
