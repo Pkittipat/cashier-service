@@ -3,6 +3,7 @@ package cmd
 import (
 	"github.com/Pkittipat/cashier-service/config"
 	"github.com/Pkittipat/cashier-service/internal/http/handlers"
+	adminHandler "github.com/Pkittipat/cashier-service/internal/http/handlers/admin"
 	"github.com/Pkittipat/cashier-service/pkg/inventory"
 	"go.uber.org/dig"
 )
@@ -16,6 +17,7 @@ func BuildContainer() *dig.Container {
 
 	// Handlers
 	_ = container.Provide(handlers.NewCashierHandler)
+	_ = container.Provide(adminHandler.NewInventory)
 
 	return container
 }

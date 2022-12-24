@@ -8,12 +8,6 @@ type Inventory struct {
 }
 
 func NewInvetory(inventory []*inventory.Node) (out []*Inventory) {
-	// for val, amount := range in {
-	// 	out = append(out, &Inventory{
-	// 		Value:  val,
-	// 		Amount: amount,
-	// 	})
-	// }
 	for _, node := range inventory {
 		out = append(out, &Inventory{
 			Value:  node.Value,

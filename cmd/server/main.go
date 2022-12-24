@@ -8,6 +8,7 @@ import (
 	"github.com/Pkittipat/cashier-service/cmd"
 	"github.com/Pkittipat/cashier-service/config"
 	"github.com/Pkittipat/cashier-service/internal/http/handlers"
+	adminHandler "github.com/Pkittipat/cashier-service/internal/http/handlers/admin"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/dig"
 )
@@ -50,13 +51,16 @@ func setupMiddlewares(app *gin.Engine, container *dig.Container) {
 
 func setupRoutes(app *gin.Engine, container *dig.Container) {
 	var (
-		cashierHandler handlers.CashierHandler
+		cashierHandler        handlers.CashierHandler
+		adminInventoryHandler adminHandler.InventoryHandler
 	)
 
 	if err := container.Invoke(func(
 		_cashierHandler handlers.CashierHandler,
+		_adminInventoryHandler adminHandler.InventoryHandler,
 	) {
 		cashierHandler = _cashierHandler
+		adminInventoryHandler = _adminInventoryHandler
 	}); err != nil {
 		panic(err)
 	}
@@ -64,6 +68,14 @@ func setupRoutes(app *gin.Engine, container *dig.Container) {
 	app.GET("/healthz", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, "OK")
 	})
+
+	adminRoute := app.Group("/admin")
+	{
+		inventoryRoute := adminRoute.Group("/inventory")
+		{
+			inventoryRoute.PUT(":value/:amount", adminInventoryHandler.UpdateInventory)
+		}
+	}
 
 	cashierRoute := app.Group("/cashier")
 	{

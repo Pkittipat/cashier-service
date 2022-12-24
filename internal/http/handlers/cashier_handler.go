@@ -26,19 +26,6 @@ func NewCashierHandler(
 	}
 }
 
-// Inventory represents the current inventory of bank notes and coins in the cashier desk.
-var Inventory = map[float64]int{
-	1000: 10,
-	500:  20,
-	100:  15,
-	50:   20,
-	20:   30,
-	10:   20,
-	5:    20,
-	1:    20,
-	0.25: 50,
-}
-
 func (h *cashierHandler) GetInventory(c *gin.Context) {
 	c.JSON(http.StatusOK, responses.NewInvetory(h.inventoryNode.GetInventory()))
 	return
