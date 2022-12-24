@@ -15,7 +15,14 @@ Returns a JSON response with the following parameters:
 - `breakdown:` a list of dictionaries representing the bank notes and coins to be given to the customer, with the following keys:
   - `value:` the value of the bank note or coin (float)
   - `amount:` the number of bank notes or coins of this value to be given (int)
+#### PUT /admin/inventory/:value/:amount
+Take path with the flowwing parameters:
+- `value:` the value of the bank note or coin (float)
+- `amount:` the number of bank note or coin (int)
 
+Returns a JSON response with the following parameters:
+- `value:` the value of the bank note or coin (float)
+- `amount:` the number of bank notes or coins of this value to be given (int)
 ## Example
 ### Request
 ```Perl
