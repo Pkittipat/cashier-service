@@ -38,21 +38,6 @@ func LoadConfig() (*Config, error) {
 	if err := godotenv.Load(envFile); err != nil {
 		configLogger.Info("Error loading dot env file", zap.String("path", envFile))
 	}
-	// var config Config
-
-	// err := loadEnv()
-	// if err == nil {
-	// 	log.Println("Env file loaded")
-	// }
-
-	// err = configor.
-	// 	New(&configor.Config{AutoReload: true, AutoReloadInterval: time.Minute}).
-	// 	Load(&config)
-
-	// if err != nil {
-	// 	log.Println(err)
-	// 	log.Fatal("Error loading config")
-	// }
 
 	var cfg Config
 	_, err = env.UnmarshalFromEnviron(&cfg)
