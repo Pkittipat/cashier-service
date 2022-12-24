@@ -6,6 +6,7 @@ import (
 
 	"github.com/Pkittipat/cashier-service/cmd"
 	"github.com/Pkittipat/cashier-service/config"
+	"github.com/Pkittipat/cashier-service/internal/http/handlers"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/dig"
 )
@@ -39,7 +40,25 @@ func setupMiddlewares(app *gin.Engine, container *dig.Container) {
 }
 
 func setupRoutes(app *gin.Engine, container *dig.Container) {
+	var (
+		cashierHandler handlers.CashierHandler
+	)
+
+	if err := container.Invoke(func(
+		_cashierHandler handlers.CashierHandler,
+	) {
+		cashierHandler = _cashierHandler
+	}); err != nil {
+		panic(err)
+	}
+
 	app.GET("/healthz", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, "OK")
 	})
+
+	cashierRoute := app.Group("/cashier")
+	{
+		cashierRoute.GET("/inventory", cashierHandler.GetInventory)
+		cashierRoute.POST("/purchase", cashierHandler.Purchase)
+	}
 }
