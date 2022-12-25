@@ -5,6 +5,10 @@ import (
 	"fmt"
 )
 
+var (
+	ErrTotalAmountNotEnough = errors.New("bank notes and coins are not enough the return")
+)
+
 // Node represents a node in the inventory tree.
 type Node struct {
 	Value  float64
@@ -59,7 +63,7 @@ func (n *Node) TotalAmount() float64 {
 func (i *Inventory) Validate(price float64, payment float64) error {
 	change := payment - price
 	if i.TotalAmount() <= change {
-		return errors.New("bank notes and coins are not enough the return")
+		return ErrTotalAmountNotEnough
 	}
 	return nil
 }

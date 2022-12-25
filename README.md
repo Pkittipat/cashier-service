@@ -52,6 +52,20 @@ POST /cashier/purchase
   ]
 }
 ```
+### Response Error
+#### 400 - Bad Request
+  - bank notes and coins are not enough the return
+  - payment shouldn't less that price
+```
+400 - Bad Request
+500 - Internal Server Error
+{
+  "status": {
+    "message": "bank notes and coins are not enough the return"
+  },
+  "data": null
+}
+```
 ## Features
 - Accept payment method `cash`.
 - Displaying the current inventory of bank notes and coins on the screen for customers to see.

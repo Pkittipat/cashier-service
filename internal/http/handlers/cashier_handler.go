@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/Pkittipat/cashier-service/internal/http/requests"
@@ -48,8 +49,12 @@ func (h *cashierHandler) Purchase(c *gin.Context) {
 		return
 	}
 
-	result, err := h.usecase.CalculateChange(request.Price, request.Payment)
+	result, err := h.usecase.CalculateChange(c, request.Price, request.Payment)
 	if err != nil {
+		if errors.Is(err, inventory.ErrTotalAmountNotEnough) {
+			responses.NewErrorResponse(err).Response(c, http.StatusBadRequest)
+			return
+		}
 		responses.NewErrorResponse(err).Response(c, http.StatusInternalServerError)
 		return
 	}
