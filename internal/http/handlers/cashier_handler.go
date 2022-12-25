@@ -40,7 +40,7 @@ func (h *cashierHandler) GetInventory(c *gin.Context) {
 func (h *cashierHandler) Purchase(c *gin.Context) {
 	var request requests.PurchaseForm
 	if err := c.ShouldBindJSON(&request); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		responses.NewErrorResponse(err).Response(c, http.StatusBadRequest)
 		return
 	}
 	if err := request.Validate(); err != nil {
