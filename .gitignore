@@ -23,7 +23,7 @@ Thumbs.db
 *.pem
 
 # Env
-.env*
+.env
 
 #Robot Framework reporting files
 log.html
