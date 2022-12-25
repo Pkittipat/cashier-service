@@ -70,7 +70,7 @@ func setupRoutes(app *gin.Engine, container *dig.Container) {
 	{
 		inventoryRoute := adminRoute.Group("/inventory")
 		{
-			inventoryRoute.PUT(":value/:amount", adminInventoryHandler.UpdateInventory)
+			inventoryRoute.PATCH(":value/:amount", adminInventoryHandler.UpdateInventory)
 		}
 	}
 

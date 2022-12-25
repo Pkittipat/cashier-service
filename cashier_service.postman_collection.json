@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "0a776097-2f8b-49b0-998d-0cd68ccb6ffb",
-		"name": "New Collection",
+		"name": "Cashier service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "13337686"
 	},
@@ -61,7 +61,7 @@
 		{
 			"name": "Admin Update Inventory",
 			"request": {
-				"method": "PUT",
+				"method": "PATCH",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -102,7 +102,7 @@
 						},
 						{
 							"key": "amount",
-							"value": "1"
+							"value": "10"
 						}
 					]
 				}
