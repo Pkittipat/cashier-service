@@ -1,5 +1,13 @@
 # cashier-service
-
+## Server
+#### Setup dependencies
+```
+$ make setup
+```
+#### start the server
+```
+$ make start
+```
 ## API Endpoints
 #### GET /cashier/inventory
 Returns the current inventory of bank notes and coins in the cashier desk, with the value and amount of each type.
