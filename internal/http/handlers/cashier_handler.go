@@ -48,11 +48,6 @@ func (h *cashierHandler) Purchase(c *gin.Context) {
 		return
 	}
 
-	if err := h.inventoryNode.Validate(request.Price, request.Payment); err != nil {
-		responses.NewErrorResponse(err).Response(c, http.StatusBadRequest)
-		return
-	}
-
 	result, err := h.usecase.CalculateChange(request.Price, request.Payment)
 	if err != nil {
 		responses.NewErrorResponse(err).Response(c, http.StatusInternalServerError)
