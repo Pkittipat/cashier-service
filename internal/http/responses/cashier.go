@@ -3,18 +3,21 @@ package responses
 import "github.com/Pkittipat/cashier-service/pkg/inventory"
 
 type Inventory struct {
-	Value  float64 `json:"value"`
-	Amount int     `json:"amount"`
+	TotalAmount float64      `json:"total_amount"`
+	Breakdown   []*Breakdown `json:"breakdown"`
 }
 
-func NewInvetory(inventory []*inventory.Node) (out []*Inventory) {
-	for _, node := range inventory {
-		out = append(out, &Inventory{
+func NewInvetory(breakdown []*inventory.Node, totalAmount float64) *Inventory {
+	inventory := &Inventory{
+		TotalAmount: totalAmount,
+	}
+	for _, node := range breakdown {
+		inventory.Breakdown = append(inventory.Breakdown, &Breakdown{
 			Value:  node.Value,
 			Amount: node.Amount,
 		})
 	}
-	return out
+	return inventory
 }
 
 // Purcahse

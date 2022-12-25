@@ -1,6 +1,9 @@
 package inventory
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 // Node represents a node in the inventory tree.
 type Node struct {
@@ -43,6 +46,27 @@ func (n *Node) Insert(value float64, amount int) {
 			n.Right.Insert(value, amount)
 		}
 	}
+}
+
+// TotalAmount returns the total amount of currency available in the subtree rooted at this node.
+func (n *Node) TotalAmount() float64 {
+	if n == nil {
+		return 0
+	}
+	return n.Value*float64(n.Amount) + n.Left.TotalAmount() + n.Right.TotalAmount()
+}
+
+func (i *Inventory) Validate(price float64, payment float64) error {
+	change := payment - price
+	if i.TotalAmount() <= change {
+		return errors.New("bank notes and coins are not enough the return")
+	}
+	return nil
+}
+
+// Get TotalAmount of inventory
+func (i *Inventory) TotalAmount() float64 {
+	return i.Root.TotalAmount()
 }
 
 // GetInventory returns the current inventory.

@@ -31,7 +31,8 @@ func NewCashierHandler(
 }
 
 func (h *cashierHandler) GetInventory(c *gin.Context) {
-	data := responses.NewInvetory(h.inventoryNode.GetInventory())
+	totalAmount := h.inventoryNode.TotalAmount()
+	data := responses.NewInvetory(h.inventoryNode.GetInventory(), totalAmount)
 	responses.NewResponse(data).Response(c, http.StatusOK)
 	return
 }
@@ -40,6 +41,15 @@ func (h *cashierHandler) Purchase(c *gin.Context) {
 	var request requests.PurchaseForm
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if err := request.Validate(); err != nil {
+		responses.NewErrorResponse(err).Response(c, http.StatusBadRequest)
+		return
+	}
+
+	if err := h.inventoryNode.Validate(request.Price, request.Payment); err != nil {
+		responses.NewErrorResponse(err).Response(c, http.StatusBadRequest)
 		return
 	}
 
