@@ -9,7 +9,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-const projectDirName = "{{ .ProjectDirectory }}"
+const projectDirName = "cashier-service"
 
 func loadEnv() error {
 	var (

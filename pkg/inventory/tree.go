@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	ErrTotalAmountNotEnough = errors.New("bank notes and coins are not enough the return")
+	ErrTotalAmountNotEnough = errors.New("bank notes and coins are not enough to return")
 )
 
 // Node represents a node in the inventory tree.

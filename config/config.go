@@ -1,10 +1,10 @@
 package config
 
 import (
+	"log"
 	"os"
 
-	"github.com/Netflix/go-env"
-	"github.com/joho/godotenv"
+	"github.com/jinzhu/configor"
 	"go.uber.org/zap"
 )
 
@@ -25,27 +25,26 @@ type Config struct {
 // LoadConfig loads the configuration from `.env` file in the same
 // directory as the application and populate the Config accordingly.
 func LoadConfig() (*Config, error) {
+	// Since the application logger depends on the config, we will use a dedicated logger here.
 	configLogger, err := zap.NewProduction()
 	if err != nil {
-		return nil, err
+		log.Fatal(err)
 	}
 
-	envFile := os.Getenv("ENV_FILE")
-	if envFile == "" {
-		envFile = ".env"
+	err = loadEnv()
+	if err == nil {
+		configLogger.Info("Env aws loaded")
 	}
 
-	if err := godotenv.Load(envFile); err != nil {
-		configLogger.Info("Error loading dot env file", zap.String("path", envFile))
-	}
+	config := Config{}
+	err = configor.Load(&config)
 
-	var cfg Config
-	_, err = env.UnmarshalFromEnviron(&cfg)
 	if err != nil {
-		return nil, err
+		configLogger.Fatal("Error loading config", zap.Error(err))
+		os.Exit(1)
 	}
 
-	return &cfg, err
+	return &config, err
 }
 
 // LoadTestConfig ...

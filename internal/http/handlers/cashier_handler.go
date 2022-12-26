@@ -35,7 +35,6 @@ func (h *cashierHandler) GetInventory(c *gin.Context) {
 	totalAmount := h.inventoryNode.TotalAmount()
 	data := responses.NewInvetory(h.inventoryNode.GetInventory(), totalAmount)
 	responses.NewResponse(data).Response(c, http.StatusOK)
-	return
 }
 
 func (h *cashierHandler) Purchase(c *gin.Context) {
@@ -59,5 +58,4 @@ func (h *cashierHandler) Purchase(c *gin.Context) {
 		return
 	}
 	responses.NewResponse(result).Response(c, http.StatusOK)
-	return
 }

@@ -28,7 +28,7 @@ func (c *cashierUsecase) CalculateChange(
 	price float64,
 	payment float64,
 ) (*responses.Purchase, error) {
-	breakdownMap, err := calculateBrealdown(c.inventoryNode, price, payment)
+	breakdownMap, err := calculateBreakdown(c.inventoryNode, price, payment)
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +44,7 @@ func (c *cashierUsecase) CalculateChange(
 	}, nil
 }
 
-func calculateBrealdown(inventory *inventory.Inventory, price float64, payment float64) (map[float64]*responses.Breakdown, error) {
+func calculateBreakdown(inventory *inventory.Inventory, price float64, payment float64) (map[float64]*responses.Breakdown, error) {
 	if err := inventory.Validate(price, payment); err != nil {
 		return nil, err
 	}

@@ -45,5 +45,4 @@ func (h *inventoryHandler) UpdateInventory(c *gin.Context) {
 
 	data := gin.H{"value": value, "amount": amount}
 	responses.NewResponse(data).Response(c, http.StatusOK)
-	return
 }

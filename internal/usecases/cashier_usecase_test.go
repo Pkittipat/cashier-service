@@ -7,7 +7,7 @@ import (
 	"github.com/Pkittipat/cashier-service/pkg/inventory"
 )
 
-func TestCalculateBrealdown(t *testing.T) {
+func TestCalculateBreakdown(t *testing.T) {
 	inventory := inventory.NewInventory()
 	type args struct {
 		price   float64
@@ -67,7 +67,7 @@ func TestCalculateBrealdown(t *testing.T) {
 
 	for _, tc := range testcases {
 		t.Run(tc.name, func(t *testing.T) {
-			got, _ := calculateBrealdown(inventory, tc.args.price, tc.args.payment)
+			got, _ := calculateBreakdown(inventory, tc.args.price, tc.args.payment)
 			for key, elm := range got {
 				val, ok := tc.want[key]
 				if !ok {
