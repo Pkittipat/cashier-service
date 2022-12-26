@@ -33,7 +33,7 @@ func LoadConfig() (*Config, error) {
 
 	err = loadEnv()
 	if err == nil {
-		configLogger.Info("Env aws loaded")
+		configLogger.Info("Env loaded")
 	}
 
 	config := Config{}
